@@ -5,7 +5,7 @@ import li.cil.manual.api.ManualAPI;
 import li.cil.manual.api.manual.TabIconRenderer;
 import li.cil.manual.api.prefab.manual.ItemStackTabIconRenderer;
 import li.cil.manual.api.prefab.manual.TextureTabIconRenderer;
-import li.cil.manual.common.api.ManualAPIImpl;
+import li.cil.manual.common.api.ManualImpl;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -91,7 +91,7 @@ public enum Config {
         }
 
         if (mainPath != null) {
-            ManualAPIImpl.setDefaultPage(mainPath);
+            ManualImpl.setDefaultPage(mainPath);
         } else {
             RTFM.getLog().error(String.format("Invalid main tab '%s'", mainTab));
         }

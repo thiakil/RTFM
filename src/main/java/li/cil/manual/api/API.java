@@ -1,5 +1,6 @@
 package li.cil.manual.api;
 
+import net.minecraftforge.fml.common.registry.IForgeRegistry;
 
 /**
  * Glue / actual references for the RTFM API.
@@ -18,6 +19,7 @@ public final class API {
     // --------------------------------------------------------------------- //
 
     // Set in RTFM pre-init, prefer using static entry point classes instead.
+    public static IForgeRegistry<li.cil.manual.api.detail.Manual> manuals;
     public static li.cil.manual.api.detail.ManualAPI manualAPI;
 
     private API() {

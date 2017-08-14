@@ -5,7 +5,7 @@ import li.cil.manual.client.manual.Document;
 import li.cil.manual.client.manual.segment.InteractiveSegment;
 import li.cil.manual.client.manual.segment.Segment;
 import li.cil.manual.client.renderer.TextureLoader;
-import li.cil.manual.common.api.ManualAPIImpl;
+import li.cil.manual.common.api.ManualImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -58,8 +58,8 @@ public final class GuiManual extends GuiScreen {
     private ImageButton scrollButton = null;
 
     public void pushPage(final String path) {
-        if (!ManualAPIImpl.peekPath().equals(path)) {
-            ManualAPIImpl.pushPath(path);
+        if (!ManualImpl.peekPath().equals(path)) {
+            ManualImpl.pushPath(path);
             refreshPage();
         }
     }
@@ -77,7 +77,7 @@ public final class GuiManual extends GuiScreen {
         xSize = guiSize.scaledWidth;
         ySize = guiSize.scaledHeight;
 
-        for (int i = 0; i < ManualAPIImpl.getTabs().size() && i < maxTabsPerSide; i++) {
+        for (int i = 0; i < ManualImpl.getTabs().size() && i < maxTabsPerSide; i++) {
             final int x = guiLeft + tabPosX;
             final int y = guiTop + tabPosY + i * (tabHeight - tabOverlap);
             buttonList.add(new ImageButton(i, x, y, tabWidth, tabHeight - tabOverlap - 1, TextureLoader.LOCATION_MANUAL_TAB).setImageHeight(tabHeight).setVerticalImageOffset(-tabOverlap / 2));
@@ -101,8 +101,8 @@ public final class GuiManual extends GuiScreen {
         scrollButton.enabled = canScroll();
         scrollButton.hoverOverride = isDragging;
 
-        for (int i = 0; i < ManualAPIImpl.getTabs().size() && i < maxTabsPerSide; i++) {
-            final ManualAPIImpl.Tab tab = ManualAPIImpl.getTabs().get(i);
+        for (int i = 0; i < ManualImpl.getTabs().size() && i < maxTabsPerSide; i++) {
+            final ManualImpl.Tab tab = ManualImpl.getTabs().get(i);
             final ImageButton button = (ImageButton) buttonList.get(i);
             GlStateManager.pushMatrix();
             GlStateManager.translate(button.xPosition + 30, button.yPosition + 4 - tabOverlap / 2, zLevel);
@@ -115,8 +115,8 @@ public final class GuiManual extends GuiScreen {
         if (!isDragging) {
             currentSegment.ifPresent(s -> s.tooltip().ifPresent(t -> drawHoveringText(Collections.singletonList(I18n.format(t)), mouseX, mouseY, getFontRenderer())));
 
-            for (int i = 0; i < ManualAPIImpl.getTabs().size() && i < maxTabsPerSide; i++) {
-                final ManualAPIImpl.Tab tab = ManualAPIImpl.getTabs().get(i);
+            for (int i = 0; i < ManualImpl.getTabs().size() && i < maxTabsPerSide; i++) {
+                final ManualImpl.Tab tab = ManualImpl.getTabs().get(i);
                 final ImageButton button = (ImageButton) buttonList.get(i);
                 if (mouseX > button.xPosition && mouseX < button.xPosition + button.width && mouseY > button.yPosition && mouseY < button.yPosition + button.height) {
                     if (tab.tooltip != null) {
@@ -187,8 +187,8 @@ public final class GuiManual extends GuiScreen {
 
     @Override
     protected void actionPerformed(final GuiButton button) throws IOException {
-        if (button.id >= 0 && button.id < ManualAPIImpl.getTabs().size()) {
-            ManualAPI.navigate(ManualAPIImpl.getTabs().get(button.id).path);
+        if (button.id >= 0 && button.id < ManualImpl.getTabs().size()) {
+            ManualAPI.navigate(ManualImpl.getTabs().get(button.id).path);
         }
     }
 
@@ -208,7 +208,7 @@ public final class GuiManual extends GuiScreen {
     }
 
     private int offset() {
-        return ManualAPIImpl.peekOffset();
+        return ManualImpl.peekOffset();
     }
 
     private int maxOffset() {
@@ -216,15 +216,15 @@ public final class GuiManual extends GuiScreen {
     }
 
     private void refreshPage() {
-        final Iterable<String> content = ManualAPI.contentFor(ManualAPIImpl.peekPath());
-        document = Document.parse(content != null ? content : Collections.singletonList("Document not found: " + ManualAPIImpl.peekPath()));
+        final Iterable<String> content = ManualAPI.contentFor(ManualImpl.peekPath());
+        document = Document.parse(content != null ? content : Collections.singletonList("Document not found: " + ManualImpl.peekPath()));
         documentHeight = Document.height(document, documentMaxWidth, getFontRenderer());
         scrollTo(offset());
     }
 
     private void popPage() {
-        if (ManualAPIImpl.getHistorySize() > 1) {
-            ManualAPIImpl.popPath();
+        if (ManualImpl.getHistorySize() > 1) {
+            ManualImpl.popPath();
             refreshPage();
         } else {
             Minecraft.getMinecraft().player.closeScreen();
@@ -244,7 +244,7 @@ public final class GuiManual extends GuiScreen {
     }
 
     private void scrollTo(final int row) {
-        ManualAPIImpl.setOffset(Math.max(0, Math.min(maxOffset(), row)));
+        ManualImpl.setOffset(Math.max(0, Math.min(maxOffset(), row)));
         final int yMin = guiTop + scrollPosY;
         if (maxOffset() > 0) {
             scrollButton.yPosition = yMin + (scrollHeight - 13) * offset() / maxOffset();

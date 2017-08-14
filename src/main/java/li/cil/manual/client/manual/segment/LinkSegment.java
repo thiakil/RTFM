@@ -1,7 +1,7 @@
 package li.cil.manual.client.manual.segment;
 
 import li.cil.manual.api.ManualAPI;
-import li.cil.manual.common.api.ManualAPIImpl;
+import li.cil.manual.common.api.ManualImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TextComponentString;
 
@@ -28,7 +28,7 @@ public final class LinkSegment extends TextSegment implements InteractiveSegment
     private boolean isLinkValid() {
         if (!isLinkValidInitialized) {
             isLinkValid = (url.startsWith("http://") || url.startsWith("https://")) ||
-                          ManualAPI.contentFor(ManualAPIImpl.makeRelative(url, ManualAPIImpl.peekPath())) != null;
+                          ManualAPI.contentFor(ManualImpl.makeRelative(url, ManualImpl.peekPath())) != null;
             isLinkValidInitialized = true;
         }
         return isLinkValid;
@@ -63,7 +63,7 @@ public final class LinkSegment extends TextSegment implements InteractiveSegment
         if (url.startsWith("http://") || url.startsWith("https://")) {
             handleUrl(url);
         } else {
-            ManualAPI.navigate(ManualAPIImpl.makeRelative(url, ManualAPIImpl.peekPath()));
+            ManualAPI.navigate(ManualImpl.makeRelative(url, ManualImpl.peekPath()));
         }
         return true;
     }

@@ -1,14 +1,17 @@
 package li.cil.manual.common;
 
 import li.cil.manual.api.API;
+import li.cil.manual.api.detail.Manual;
 import li.cil.manual.common.api.ManualAPIImpl;
 import li.cil.manual.common.init.Items;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.RegistryBuilder;
 import net.minecraftforge.oredict.OreDictionary;
 import vexatos.manualtabs.util.BadConfigException;
 
@@ -22,6 +25,12 @@ public class ProxyCommon {
         Config.INSTANCE.load(event.getSuggestedConfigurationFile());
 
         API.manualAPI = ManualAPIImpl.INSTANCE;
+        API.manuals = new RegistryBuilder<Manual>()
+                .setName(new ResourceLocation(API.MOD_ID, "manuals"))
+                .setIDRange(0, 65535)
+                .setType(Manual.class)
+                .create();
+
         Items.register(this);
     }
 
