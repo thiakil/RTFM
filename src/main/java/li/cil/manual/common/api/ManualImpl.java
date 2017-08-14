@@ -104,7 +104,7 @@ public final class ManualImpl extends Manual {
 
     // --------------------------------------------------------------------- //
 
-    private ManualImpl() {
+    ManualImpl() {
         reset();
     }
 

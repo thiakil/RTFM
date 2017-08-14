@@ -27,7 +27,7 @@ import java.util.Optional;
 public final class ManualAPI {
 
     @Nullable
-    public static Manual createManual(ResourceLocation manualID) { //TODO Document this
+    public static Manual createManual(final ResourceLocation manualID) { //TODO Document this
         if (API.manualAPI != null) {
             return API.manualAPI.createManual(manualID);
         }
@@ -35,7 +35,23 @@ public final class ManualAPI {
     }
 
     @Nullable
-    public static Manual manualFor(ResourceLocation manualID) { //TODO Document this
+    public static Manual createManual(final ResourceLocation manualID, final String unlocalizedName) { //TODO Document this
+        if (API.manualAPI != null) {
+            return API.manualAPI.createManual(manualID, unlocalizedName);
+        }
+        return null;
+    }
+
+    @Nullable
+    public static ItemStack stackFor(final ResourceLocation manualID) { //TODO Document this
+        if (API.manualAPI != null) {
+            return API.manualAPI.stackFor(manualID);
+        }
+        return null;
+    }
+
+    @Nullable
+    public static Manual manualFor(final ResourceLocation manualID) { //TODO Document this
         if (API.manuals != null) {
             return API.manuals.getValue(manualID);
         }
@@ -43,7 +59,7 @@ public final class ManualAPI {
     }
 
     @Nullable
-    public static Manual manualFor(ItemStack stack) { //TODO Document this
+    public static Manual manualFor(final ItemStack stack) { //TODO Document this
         if (API.manualAPI != null) {
             return API.manualAPI.manualFor(stack);
         }
@@ -51,9 +67,17 @@ public final class ManualAPI {
     }
 
     @Nullable
-    public ResourceLocation getManualID(ItemStack stack) { //TODO Document this
+    public ResourceLocation getManualID(final ItemStack stack) { //TODO Document this
         if (API.manualAPI != null) {
             return API.manualAPI.getManualID(stack);
+        }
+        return null;
+    }
+
+    @Nullable
+    public ResourceLocation getManualID(final Manual manual) { //TODO Document this
+        if (API.manualAPI != null) {
+            return API.manualAPI.getManualID(manual);
         }
         return null;
     }
